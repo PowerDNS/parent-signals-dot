@@ -19,6 +19,10 @@ T. April, IETF 107 dnsop:
 
 1. [draft-tapril-ns2](https://datatracker.ietf.org/doc/draft-tapril-ns2/). New `NS2` and `NS2T` RRtypes. Covers DoT, DoH, DoQ. Problems: hard to deploy parent side (like DSPKI); lots of complexity for resolvers; risk of loops.
 
+J. Levine, dprive:
+
+1. [draft-levine-dprive-signal-02](https://tools.ietf.org/html/draft-levine-dprive-signal-02). Contains six proposals that all have problems with downgrades, indirection, or that they require DNSSEC.
+
 # Other rejected ideas
 
 Apply Manu Bretelle's DSPKI type to DS, by assigning a new DNSSEC algorithm for it.
