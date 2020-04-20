@@ -47,3 +47,9 @@ Define a DNSKEY algorithm that wraps TLSA contents. Define a DS digest type that
 If we add [draft-ietf-tls-dnssec-chain-extension-07](https://tools.ietf.org/html/draft-ietf-tls-dnssec-chain-extension-07) to Bortzmeyer's proposal above, as a mandatory configuration for DoT auths, the inconvenient indirection goes away.
 Then all that is left is just the signal 'this zone has DoT' which could be a DS record with specific algorithm, ignored digest and ignored content.
 This still requires DNSSEC in the zone hosting the NS name.
+
+# Random notes
+
+## TLS chain
+
+[draft-dukhovni-tls-dnssec-chain](https://datatracker.ietf.org/doc/draft-dukhovni-tls-dnssec-chain/), [server implementation 1](https://github.com/andreasschulze/openssl-demo-server), [server implementation 2](https://github.com/shuque/chainserver)
