@@ -30,23 +30,28 @@ Problem: many registries require the ability to generate DS from DNSKEY.
 
 Put TLSA for delegated name servers in parent zone. Cannot do this with normal TLSA syntax, because `ns1.example.com` is inside the `example.com` delegation, so this requires another hack to map that name into the parent zone. Problems: this puts a limit on the maximum name length of name servers; breaks Paul Wouter's powerbind proposal; generally does not look pretty.
 
-# Proposals
-
-## SPKI in DNSKEY
-
-Stick SPKI (as defined by Manu Bretelle's DSPKI draft) in CDNSKEY (when we say CDNSKEY, we also mean 'submit DNSKEY via EPP to registry that does not accept DS').
-When we do this, the DS, using an existing digest type, becomes hashed SPKI, which TLS clients can work with.
-Problem: as some registries insist on doing their own hashing from DNSKEY to DS, the CDNSKEY would be limited to the non-hashed variant, which prohibits any extra parameters, such as pointing the pin at something higher in the chain.
-
-## DNSKEY-wrapped TLSA plus DS NULL digest
-
-Define a DNSKEY algorithm that wraps TLSA contents. Define a DS digest type that does not hash - instead it copies DNSKEY content verbatim. We can call it NULL or VERBATIM or something else. Then, we are effectively publishing TLSA for the name server hosts, in the parent zone, without requiring any changes to existing auth software; resolvers will still be able to pass on DS records correctly to their forwarding clients, and can optionally use the new DNSKEY algorithm and DS digest type to confidently operate TLS to the auths.
-
 ## Bortzmeyer+TLSA chain
 
 If we add [draft-ietf-tls-dnssec-chain-extension-07](https://tools.ietf.org/html/draft-ietf-tls-dnssec-chain-extension-07) to Bortzmeyer's proposal above, as a mandatory configuration for DoT auths, the inconvenient indirection goes away.
 Then all that is left is just the signal 'this zone has DoT' which could be a DS record with specific algorithm, ignored digest and ignored content.
 This still requires DNSSEC in the zone hosting the NS name.
+
+Problem: because the NSset in a delegation is unsigned, this does not actually provide any security.
+
+# Proposals
+
+## SPKI in DNSKEY
+
+Stick SPKI (as defined by Manu Bretelle's DSPKI draft) in CDNSKEY (when we say CDNSKEY, we also mean 'submit DNSKEY via EPP to registry that does not accept DS').
+When we do this, the DS, using an existing digest type, becomes hashed SPKI (with a predictable prefix from 4034 5.1.4), which TLS clients can almost work with.
+Problem: as some registries insist on doing their own hashing from DNSKEY to DS, the CDNSKEY would be limited to the non-hashed variant, which prohibits any extra parameters, ~~such as pointing the pin at something higher in the chain (this is a bad idea because the NSset in a delegation is unsigned).~~
+
+## DNSKEY-wrapped TLSA plus DS NULL digest
+
+Define a DNSKEY algorithm that wraps TLSA contents. Define a DS digest type that does not hash - instead it copies DNSKEY content verbatim. We can call it NULL or VERBATIM or something else. Then, we are effectively publishing TLSA for the name server hosts, in the parent zone, without requiring any changes to existing auth software; resolvers will still be able to pass on DS records correctly to their forwarding clients, and can optionally use the new DNSKEY algorithm and DS digest type to confidently operate TLS to the auths.
+
+Problems: because the NSset in a delegation is unsigned, most combinations of TLSA parameters are useless, so this might be more complicated than is useful.
+The DS NULL digest type will be a pain to get deployed.
 
 # Random notes
 
