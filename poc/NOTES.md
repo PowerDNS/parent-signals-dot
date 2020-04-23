@@ -26,3 +26,9 @@ $ go run ./test.go
 Hello, playground
 Hash: ddbfb9887bef31f61617d84fe2ba21f917eccc1790e74505ecd48071a52200ea
 ```
+
+In shell (Bash): (just to show that the SPKI is entered into the DNSKEY unprocessed, the only mild processing happens when making or matching the DS)
+```
+$ echo 'facebook.com CDNSKEY 0 3 225' $(echo -n | openssl s_client -connect a.ns.facebook.com:853 | openssl x509 -noout -pubkey  | grep -v \-)
+facebook.com CDNSKEY 0 3 225 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAny429nLK2z9RebEg/WTX onp7at/Kreg6ngT5yA7/BrHPL1v+LTcvKERo9UE4hVGpKxHTjvMWti6pbmVus8cf brsSGh+cYR/pV/eINITeVF2DL7xN2IggTDSUxH9ph4uJWRX5Cq32nm8hVZhRslNg +j0XVan8kzgr59C94xzK/nFUTSKuLYy3R7pyKBQYUmCXeR9cJCod2Atg/x0Mh7no zcXe9SaiectoQty9slg90NP2+myWAlAdsrZ2cixqYvEmPtlhcnAj/33rctpdLt+j I2K3MyhHgRRyxWMNzebkHTUZ2X2zNSIP7TVe1kaPfAuO7oP+jr5CzfvZZYwd4NDS wwIDAQAB
+```
