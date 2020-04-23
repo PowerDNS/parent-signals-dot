@@ -1,0 +1,23 @@
+#
+# Makefile to build Internet Drafts from markdown using mmark and
+# relying on the docker image "paulej/rfctools".
+#
+# Instead of that image, use this fork: https://github.com/PowerDNS/rfctools/tree/v3
+#
+
+SRC  := $(wildcard draft-*.md)
+TXT  := $(patsubst %.md,%.txt,$(SRC))
+UID  := `id -u`
+GID  := `id -g`
+CWD  := `pwd`
+
+# Ensure the xml2rfc cache directory exists locally
+IGNORE := $(shell mkdir -p $(HOME)/.cache/xml2rfc)
+
+all: $(TXT) $(HTML)
+
+clean:
+	rm -f draft*.txt draft-*.xml draft-*.html
+
+%.txt: %.md
+	docker run --rm --user=$(UID):$(GID) -v $(CWD):/rfc -v $(HOME)/.cache/xml2rfc:/var/cache/xml2rfc rfctools md2rfc $^
