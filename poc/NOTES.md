@@ -19,3 +19,10 @@ ddbfb9887bef31f61617d84fe2ba21f917eccc1790e74505ecd48071a52200ea
 If test.py had looked up, and found, that DS record, it could confidently send queries over the TLS connection it has just established!
 
 (I randomly picked algorithm number 225).
+
+In Go:
+```
+$ go run ./test.go
+Hello, playground
+Hash: ddbfb9887bef31f61617d84fe2ba21f917eccc1790e74505ecd48071a52200ea
+```
