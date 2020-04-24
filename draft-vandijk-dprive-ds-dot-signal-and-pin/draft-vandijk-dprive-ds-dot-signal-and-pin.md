@@ -45,7 +45,7 @@ organization = "TransIP"
 
 .# Abstract
 
-This Internet-Draft specifies a way to signal the usage of DoT, and the pinned keys for that DoT usage, in authoritative servers.
+This document specifies a way to signal the usage of DoT, and the pinned keys for that DoT usage, in authoritative servers.
 This signal lives on the parent side of delegations, in DS records.
 To ensure easy deployment, the signal is defined in terms of (C)DNSKEY.
 
@@ -208,7 +208,7 @@ By doing so, that exchange gains confidentiality, data integrity, peer entity au
 
 [RFC Editor: please remove this section before publication]
 
-This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in [@!RFC6982].
+This section records the status of known implementations of the protocol defined by this specification at the time of posting of this document, and is based on a proposal described in [@!RFC6982].
 The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.
 Please note that the listing of any individual implementation here does not imply endorsement by the IETF.
 Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors.
