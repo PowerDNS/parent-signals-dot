@@ -35,4 +35,4 @@ print("### spki:\n%s" % (spki,))
 tohash = dns.name.from_text(domain).to_wire()+b'\x00\x00'+bytes((3,))+bytes((alg,))+spki
 digest = hashlib.sha256(tohash).hexdigest()
 print("### digest for DS:\n%s" % (digest,))
-print("### DS:\n%s IN DS x %s 2 %s" % (domain, alg, digest))
+print("### DS:\n%s IN DS x %d 2 %s" % (domain, alg, digest))
