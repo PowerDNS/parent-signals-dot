@@ -22,9 +22,8 @@ If test.py had looked up, and found, that DS record, it could confidently send q
 
 In Go:
 ```
-$ go run ./test.go
-Hello, playground
-Hash: ddbfb9887bef31f61617d84fe2ba21f917eccc1790e74505ecd48071a52200ea
+$ go run ./test.go 225 facebook.com a.ns.facebook.com
+facebook.com IN DS x 225 2 ddbfb9887bef31f61617d84fe2ba21f917eccc1790e74505ecd48071a52200ea
 ```
 
 In shell (Bash): (just to show that the SPKI is entered into the DNSKEY unprocessed, the only mild processing happens when making or matching the DS)
