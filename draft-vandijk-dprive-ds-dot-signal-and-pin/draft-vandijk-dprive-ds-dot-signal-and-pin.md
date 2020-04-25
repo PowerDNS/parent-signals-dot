@@ -95,6 +95,19 @@ The pseudo DNSKEY type can be used in CDNSKEY and CDS, as defined in RFC7344, re
 # Example
 
 
+# Implementation
+
+The subsection titles in this section attempt to follow the terminology from [@RFC8499] in as far as it has suitable terms.
+
+## Authoritative server changes
+
+## Validating resolver changes
+
+## Stub resolver changes
+
+## Zone validator changes
+
+## Domain registry changes
 
 # Security Considerations
 
