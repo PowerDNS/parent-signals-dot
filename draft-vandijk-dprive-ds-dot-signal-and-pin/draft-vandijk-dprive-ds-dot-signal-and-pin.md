@@ -128,6 +128,7 @@ This document would not have been possible without the tremendous inspiration Ma
 Further great input was received from
 Job Snijders,
 Petr Spacek,
+Pieter Lexis,
 Ralph Dolmans,
 and Vladimir Cunat.
 
