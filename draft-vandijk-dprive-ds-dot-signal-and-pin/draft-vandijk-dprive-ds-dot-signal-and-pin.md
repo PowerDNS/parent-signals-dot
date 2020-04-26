@@ -94,6 +94,48 @@ The pseudo DNSKEY type can be used in CDNSKEY and CDS, as defined in RFC7344, re
 
 # Example
 
+This section will take you through the various parts of this specification, by example.
+
+We assume that we are working with a domain `example.com.` with one name server, `ns.example.com.`.
+
+## Generating and placing the (C)DNSKEY/DS records
+
+We will walk you through the CDNSKEY/DS generation, demonstrating it in terms of basic shell scripting and some common tools.
+
+First, we extract the SubjectPublicKeyInfo:
+
+```
+$ echo -n '' | openssl s_client -connect ns.example.com:853 | openssl x509 -noout -pubkey > pubkey.pem
+```
+
+This gives us a file `pubkey.pem` that looks like this (abridged):
+
+```
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAxH2a6NxIcw5527b04kKy
+...
+71AWASNoX2GQh7eaQPDD9i8CAwEAAQ==
+-----END PUBLIC KEY-----
+```
+
+To turns this into a CDNSKEY:
+
+1. remove the header and footer
+2. remove all newlines
+3. prepend all CDNSKEY parts that are not the Public Key
+
+If we do that, we end up with `example.com. IN CDNSKEY 0 3 225 MIICIj...AAQ==`
+
+If your registry accepts CDNSKEY, or DNSKEY via EPP, you are done - you can get your DS placed.
+
+To generate the DS, do something like this:
+
+```
+$ echo example.com. IN DNSKEY 0 3 225 MIICIj...AAQ== | ldns-key2ds -f -n -2 /dev/stdin
+example.com.	3600	IN	DS	7573 225 2 fcb65cc82ca39df539460389f7959d70244f2149c0f660d140a0e9218e16c26c
+```
+
+[TODO: what if a server has different keys depending on crypto algorithm negotiation? probably need some words on that somewhere, perhaps not (only) in this section]
 
 # Implementation
 
