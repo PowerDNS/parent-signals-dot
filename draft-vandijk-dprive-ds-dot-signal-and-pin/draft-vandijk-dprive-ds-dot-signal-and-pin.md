@@ -101,7 +101,14 @@ The subsection titles in this section attempt to follow the terminology from [@R
 
 ## Authoritative server changes
 
+If a DS record exists that signals DoT for a domain, it is recommended that all nameservers SHOULD support DoT on all their associated addresses.
+However, there are potential cases where this is not possible, like having multiple DNS providers.
+In this case it advised that nameservers that do not support DoT respond with a RST response on the DoT port to prevent name resolution slow downs.
+
 ## Validating resolver changes
+
+If a resolver succesfully uses DoT with a nameserver as specified in this document, it MAY assume DoT is always available for that nameserver.
+However, it MAY NOT assume that the connection is properly pinned unless there is a DS record available for the domain it is currently resolving.
 
 ## Stub resolver changes
 
