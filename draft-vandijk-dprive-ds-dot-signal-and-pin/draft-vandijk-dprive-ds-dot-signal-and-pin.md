@@ -98,12 +98,24 @@ The pseudo DNSKEY type can be used in CDNSKEY and CDS, as defined in RFC7344, re
 # Implementation
 
 The subsection titles in this section attempt to follow the terminology from [@RFC8499] in as far as it has suitable terms.
+'Implementation' is understood to mean both 'code changes' and 'operational changes' here.
 
 ## Authoritative server changes
 
+This specification defines no changes to query processing in authoritative servers.
+
+If DoT-signaling DS records are published for a zone, all name servers for the zone (from both the parent-side and child-side NS RRsets) SHOULD offer DoT service on port 853, and when they do, they SHOULD do so using keys present in the DS RRset.
+However, there are potential cases where this is not possible, like having multiple DNS providers.
+In this case the name servers that do not support DoT SHOULD respond with a RST response on the port tcp/853 to prevent name resolution slow downs.
+
 ## Validating resolver changes
 
+If a resolver succesfully uses DoT with a nameserver as specified in this document, it MAY assume DoT is always available for that nameserver.
+However, it MAY NOT assume that the connection is properly pinned unless there is a DS record available for the domain it is currently resolving.
+
 ## Stub resolver changes
+
+This specification defines no changes to stub resolvers.
 
 ## Zone validator changes
 
