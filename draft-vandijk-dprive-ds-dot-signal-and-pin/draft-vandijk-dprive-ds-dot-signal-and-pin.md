@@ -161,7 +161,20 @@ Some Proof of Concept code showing the generation of the (C)DNSKEY, and the subs
 
 # IANA Considerations
 
-[TODO: boilerplate about requesting TBD assignment]
+This document updates the IANA registry "DNS Security Algorithm Numbers" at https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml
+
+The following entries have been added to the registry:
+
+~~~ ascii-art
++--------------+----------------+
+| Number       | TBD            |
+| Description  | DoT signal+pin |
+| Mnemonic     | DOTPIN         |
+| Zone signing | N              |
+| Trans sec.   | N              |
+| Reference    | RFC TBD2       |
++--------------+----------------+
+~~~
 
 # Acknowledgements
 
