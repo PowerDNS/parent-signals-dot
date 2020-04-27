@@ -122,7 +122,20 @@ This specification defines no changes to stub resolvers.
 
 ## Zone validator changes
 
+This section covers both the 'online' type of zone validator, such as Zonemaster, and the 'offline full zone' type, such as `validns` and `dnssec-verify`.
+
+Checks for child DNSKEY records based on parent DS records algorithms, and checks for zone RRSIG algorithms based on DNSKEY algorithms, MUST not be applied to algorithm TBD.
+[NOTE: rephrase this in terms of the Zone Signing column at  https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml ?]
+
+DNSKEY validity checks MAY verify correct DER syntax in DNSKEY Public Key content when algorithm is TBD.
+
 ## Domain registry changes
+
+Any pre-delegation or periodic checks by registries should honor the Zone validator changes from the previous section.
+
+This specification trusts that appearance of TBD in https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml will eventually lead registries to accept DS/(C)DNSKEY submissions for algorithm TBD.
+
+Registries that limit the total number of DS records for a delegation SHOULD consider having a separate limit for algorithm TBD DS records, as their management is separate from actual DNSSEC key management.
 
 # Security Considerations
 
