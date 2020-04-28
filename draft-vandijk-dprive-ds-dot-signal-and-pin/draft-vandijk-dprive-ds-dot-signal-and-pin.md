@@ -57,7 +57,7 @@ Even quite recently, DNS was a completely unencrypted protocol, with no protecti
 In recent years this landscape has shifted.
 The connections between stubs and resolvers are now often protected by DoT, DoH, or other protocols that provide privacy.
 This document introduces a way to signal, from the parent side of a delegation, that the name servers hosting the delegated zone support DoT, and with which TLS/X.509 keys.
-This proposal does not require any changes in authoritative name servers (other than, possibly through an external process), actually offering DoT on port 853 [@!RFC7858].
+This proposal does not require any changes in authoritative name servers, other than (possibly through an external process) actually offering DoT on port 853 [@!RFC7858].
 DNS registry operators (such as TLD operators) also need to make no changes, unless they filter uploaded DNSKEY/DS records on acceptable DNSKEY algorithms, in which case they would need to add algorithm TBD to that list.
 
 This document was inspired by, and borrows heavily from, [@!I-D.bretelle-dprive-dot-for-insecure-delegations].
