@@ -105,7 +105,8 @@ We will walk you through the CDNSKEY/DS generation, demonstrating it in terms of
 First, we extract the SubjectPublicKeyInfo:
 
 ```
-$ echo -n '' | openssl s_client -connect ns.example.com:853 | openssl x509 -noout -pubkey > pubkey.pem
+openssl s_client -connect ns.example.com:853 < /dev/null \
+  | openssl x509 -noout -pubkey > pubkey.pem
 ```
 
 This gives us a file `pubkey.pem` that looks like this (abridged):
@@ -122,17 +123,36 @@ To turns this into a CDNSKEY:
 
 1. remove the header and footer
 2. remove all newlines
-3. prepend all CDNSKEY parts that are not the Public Key
 
-If we do that, we end up with `example.com. IN CDNSKEY 0 3 225 MIICIj...AAQ==`
+In other words:
+
+```
+openssl s_client -connect ns.example.com:853 </dev/null \
+  | openssl x509 -noout -pubkey \
+  | sed '1d;$d' \
+  | tr -d '\n'
+```
+
+Then we prepend
+
+```
+example.com. IN CDNSKEY 0 3 225
+```
+
+so that we end up with
+
+```
+example.com. IN CDNSKEY 0 3 225 MIICIj...AAQ==
+```
 
 If your registry accepts CDNSKEY, or DNSKEY via EPP, you are done - you can get your DS placed.
 
 To generate the DS, do something like this:
 
 ```
-$ echo example.com. IN DNSKEY 0 3 225 MIICIj...AAQ== | ldns-key2ds -f -n -2 /dev/stdin
-example.com.	3600	IN	DS	7573 225 2 fcb65cc82ca39df539460389f7959d70244f2149c0f660d140a0e9218e16c26c
+echo example.com. IN DNSKEY 0 3 225 MIICIj...AAQ== \
+  | ldns-key2ds -f -n -2 /dev/stdin
+example.com.	3600	IN	DS	7573 225 2 fcb6...c26c
 ```
 
 [TODO: what if a server has different keys depending on crypto algorithm negotiation? probably need some words on that somewhere, perhaps not (only) in this section]
