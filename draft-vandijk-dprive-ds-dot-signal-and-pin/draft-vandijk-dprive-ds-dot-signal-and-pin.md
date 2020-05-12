@@ -1,5 +1,5 @@
 %%%
-title = "Signalling Authoritative DoT support in DS records with key pinning"
+title = "Signalling Authoritative DoT support in DS records, with key pinning"
 abbrev = "ds-dot-signal-and-pin"
 docName = "draft-vandijk-dprive-ds-dot-signal-and-pin-00"
 category = "std"
@@ -40,6 +40,14 @@ organization = "TransIP"
  city = "Delft"
  country = "Netherlands"
 
+[[author]]
+initials = "E."
+surname = "Bretelle"
+fullname = "Emmanuel Bretelle"
+organization = "Facebook"
+[author.address]
+ email = "chantra@fb.com"
+
 %%%
 
 
@@ -54,13 +62,16 @@ To ensure easy deployment, the signal is defined in terms of (C)DNSKEY.
 # Introduction
 
 Even quite recently, DNS was a completely unencrypted protocol, with no protection against snooping.
-In recent years this landscape has shifted.
+In the past few years, this landscape has shifted.
 The connections between stubs and resolvers are now often protected by DoT, DoH, or other protocols that provide privacy.
+
 This document introduces a way to signal, from the parent side of a delegation, that the name servers hosting the delegated zone support DoT, and with which TLS/X.509 keys.
 This proposal does not require any changes in authoritative name servers, other than (possibly through an external process) actually offering DoT on port 853 [@!RFC7858].
 DNS registry operators (such as TLD operators) also need to make no changes, unless they filter uploaded DNSKEY/DS records on acceptable DNSKEY algorithms, in which case they would need to add algorithm TBD to that list.
 
 This document was inspired by, and borrows heavily from, [@!I-D.bretelle-dprive-dot-for-insecure-delegations].
+
+[NOTE: this document is maintained at https://github.com/PowerDNS/parent-signals-dot/tree/master/draft-vandijk-dprive-ds-dot-signal-and-pin]
 
 # Conventions and Definitions
 
@@ -90,7 +101,7 @@ Algorithm support SHOULD be handled at the TLS handshake level, which means a DN
 The pseudo DNSKEY record MUST NOT be present in the zone.
 The procedure for hashing the pseudo DNSKEY record is the same as for a normal DNSKEY as defined in RFC4034.
 
-The pseudo DNSKEY type can be used in CDNSKEY and CDS, as defined in RFC7344, records as well. These MAY be present in the zone.
+The pseudo DNSKEY type can be used in CDNSKEY and CDS (as defined in [@!RFC7344]) records. These records MAY be present in the zone.
 
 For those familiar with TLSA ([@RFC6698]), key matching for this protocol is identical to that provided by `TLSA 3 1 0` for (C)DNSKEY.
 For the DS case, key matching is similar to `TLSA 3 1 x` where x is not zero, except that the rest of the (C)DNSKEY, including the owner name, gets prepended before hashing.
@@ -246,6 +257,7 @@ Job Snijders,
 Petr Spacek,
 Pieter Lexis,
 Ralph Dolmans,
+Remi Gacogne,
 and Vladimir Cunat.
 
 {backmatter}
