@@ -19,7 +19,6 @@ func toDnsName(domain string) []byte {
 		outBuffer = append(outBuffer, byte(len(label)))
 		outBuffer = append(outBuffer, label...)
 	}
-	outBuffer = append(outBuffer, 0)
 	return outBuffer
 }
 
@@ -37,6 +36,9 @@ func main() {
 		os.Exit(1)
 	}
 	domain := os.Args[2]
+	if !strings.HasSuffix(domain, ".") {
+		domain = domain + "."
+	}
 	nsname := os.Args[3]
 
 	config := &tls.Config{
@@ -54,7 +56,7 @@ func main() {
 			// Assume that the first cert is probably the right one
 			cert := certs[0]
 			hashData := toDnsName(domain)
-			hashData = append(hashData, 0, 0, 3, byte(alg))
+			hashData = append(hashData, byte(0), byte(0), byte(3), byte(alg))
 			hashData = append(hashData, cert.RawSubjectPublicKeyInfo...)
 			hash := sha256.Sum256(hashData)
 			fmt.Printf("%s IN DS x %d 2 %s\n", domain, alg, hex.EncodeToString(hash[:]))
