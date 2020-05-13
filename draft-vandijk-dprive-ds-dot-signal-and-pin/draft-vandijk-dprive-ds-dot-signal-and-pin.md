@@ -251,8 +251,7 @@ The following entries have been added to the registry:
 
 # Acknowledgements
 
-This document would not have been possible without the tremendous inspiration Manu Bretelle gave us at IETF104.
-Further great input was received from
+Great input was received from
 Job Snijders,
 Petr Spacek,
 Pieter Lexis,
