@@ -55,20 +55,20 @@ func main() {
 			}
 			// Assume that the first cert is probably the right one
 			cert := certs[0]
-            rdata := []byte{byte(0), byte(0), byte(3), byte(alg)}
-            rdata = append(rdata, cert.RawSubjectPublicKeyInfo...)
+			rdata := []byte{byte(0), byte(0), byte(3), byte(alg)}
+			rdata = append(rdata, cert.RawSubjectPublicKeyInfo...)
 			hashData := toDnsName(domain)
 			hashData = append(hashData, rdata...)
-            keyTag := uint32(0)
-            for i := 0; i < len(rdata); i++ {
-                if (i & 1) == 1 {
-                    keyTag += uint32(rdata[i])
-                } else {
-                    keyTag += uint32(rdata[i]) << 8
-                }
-            }
-            keyTag += (keyTag >> 16) & 0xFFFF;
-            keyTag = keyTag & 0xFFFF;
+			keyTag := uint32(0)
+			for i := 0; i < len(rdata); i++ {
+				if (i & 1) == 1 {
+					keyTag += uint32(rdata[i])
+				} else {
+					keyTag += uint32(rdata[i]) << 8
+				}
+			}
+			keyTag += (keyTag >> 16) & 0xFFFF
+			keyTag = keyTag & 0xFFFF
 			hash := sha256.Sum256(hashData)
 			fmt.Printf("%s IN DS %d %d 2 %s\n", domain, keyTag, alg, hex.EncodeToString(hash[:]))
 			return nil
