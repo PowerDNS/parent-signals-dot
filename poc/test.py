@@ -29,7 +29,7 @@ cs = c.wrap_socket(s, server_hostname=nsname)
 print("### after connecting again, got server certificate (DER):\n{}".format(cs.getpeercert(binary_form=True)))
 
 cert = x509.load_der_x509_certificate(cs.getpeercert(binary_form=True), default_backend())
-print("### pubkey:\n{}".format(cert.public_key()))
+print("### pubkey:\n{}".format(cert.public_key().public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo).decode('ascii')))
 spki=cert.public_key().public_bytes(serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
 print("### spki:\n{}".format(spki))
 tohash = dns.name.from_text(domain).to_wire()+b'\x00\x00'+bytes((3,))+bytes((alg,))+spki
