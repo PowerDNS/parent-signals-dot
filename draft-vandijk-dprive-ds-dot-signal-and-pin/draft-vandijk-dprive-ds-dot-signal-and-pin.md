@@ -71,8 +71,6 @@ DNS registry operators (such as TLD operators) also need to make no changes, unl
 
 This document was inspired by, and borrows heavily from, [@!I-D.bretelle-dprive-dot-for-insecure-delegations].
 
-[NOTE: this document is maintained at https://github.com/PowerDNS/parent-signals-dot/tree/master/draft-vandijk-dprive-ds-dot-signal-and-pin]
-
 # Conventions and Definitions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 [@!RFC2119] [@RFC8174] when, and only when, they appear in all capitals, as shown here.
