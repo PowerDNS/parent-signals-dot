@@ -1,7 +1,7 @@
 %%%
 title = "Signalling Authoritative DoT support in DS records, with key pinning"
 abbrev = "ds-dot-signal-and-pin"
-docName = "draft-vandijk-dprive-ds-dot-signal-and-pin-00"
+docName = "draft-vandijk-dprive-ds-dot-signal-and-pin-00+"
 category = "std"
 
 ipr = "trust200902"
@@ -11,7 +11,7 @@ keyword = ["Internet-Draft"]
 
 [seriesInfo]
 name = "Internet-Draft"
-value = "draft-vandijk-dprive-ds-dot-signal-and-pin-00"
+value = "draft-vandijk-dprive-ds-dot-signal-and-pin-00+"
 stream = "IETF"
 status = "standard"
 
