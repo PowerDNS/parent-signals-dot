@@ -93,8 +93,10 @@ DNSKEY record
 
 To enable the signaling of DoT a new DNSKEY algorithm type TBD is added.
 If a resolver with support for TBD encounters a DS record with the DNSKEY algorithm type TBD it MUST connect to the authoritative servers for this domain via DoT.
-It MUST use the hashes attached to the DS records with DNSKEY algorithm type TBD to check whether the public key supplied by the authoritative nameserver is valid.
-If the DoT connection is unsuccessful or the public key supplied the server does not match one of the DS digests, the resolver MUST NOT fall back to unencrypted Do53.
+It MUST use the hashes attached to the DS records with DNSKEY algorithm type TBD to check whether the public key supplied by the authoritative nameserver during the TLS handshake is valid.
+If the DoT connection is unsuccessful or the public key supplied by the server does not match any of the DS digests, the resolver MUST NOT fall back to unencrypted Do53.
+For resolvers that are willing to probe for protocol support (DNS over HTTPS, DNS over QUIC), a fallback to other encrypted protocols is allowed if they can satisfy the key pin.
+This means that if a DS for algo TBD is present, and no name servers satisfy the pin requirement, the response returned to the client is SERVFAIL because no name servers for the domain were available to answer the questions.
 
 A domain MAY have more than one DS record with DNSKEY algorithm TBD.
 A resolver with support for TBD should then try to verify the public key supplied by the authoritative nameserver against every supplied DS record.
@@ -102,17 +104,19 @@ Multiple records can be used to support multiple DS digest types, multiple TLS k
 In case of an algorithm or key rollover the new DS record should be added to all served domains before the new key is deployed on the authoritatives.
 To allow for emergency rollovers, having a standby DS record for all domains with a private key securely stored offline can be a valid strategy.
 
-The pseudo DNSKEY record MUST contain Base64 encoded ([@!RFC4648] 4.) DER SubjectPublicKeyInfo as defined in [@!RFC5280] 4.1.2.7.
+The pseudo DNSKEY record (when considered in wire format) MUST contain the ([@!RFC4648] 4.) DER SubjectPublicKeyInfo as defined in [@!RFC5280] 4.1.2.7.
 Since the cert provided by the TLS server over the wire is already DER encoded this makes for easy validation.
+(In the DNSKEY presentation format, the Public Key field contains the Base64 encoding of the DER SPKI, which is equivalent to the SPKI in PEM format minus the header and footer.)
 The pseudo DNSKEY algorithm type TBD is algorithm agnostic, like the TLSA record, since the DER encoded data already contains information about the used algorithm.
 Algorithm support SHOULD be handled at the TLS handshake level, which means a DNS application SHOULD NOT need to be aware of the algorithm used by its TLS library.
 The pseudo DNSKEY record MUST NOT be present in the zone.
-The procedure for hashing the pseudo DNSKEY record is the same as for a normal DNSKEY as defined in RFC4034.
+The procedure for hashing the pseudo DNSKEY record is the same as for a normal DNSKEY as defined in RFC4034 5.1.4.
 
 As DNSKEY algorithm TBD is not meant to be used for Zone Signing, the existing ZONE and SEP flags do not mean anything.
 This specification statically defines the flags value as 257 for optimal compatibility with existing registry operations.
 
-The pseudo DNSKEY type can be used in CDNSKEY and CDS (as defined in [@!RFC7344]) records. These records MAY be present in the zone.
+The pseudo DNSKEY type can be used in CDNSKEY and CDS (as defined in [@!RFC7344]) records.
+These records MAY be present in the zone.
 
 For those familiar with TLSA ([@RFC6698]), key matching for this protocol is identical to that provided by `TLSA 3 1 0` for (C)DNSKEY.
 For the DS case, key matching is similar to `TLSA 3 1 x` where x is not zero, except that the rest of the (C)DNSKEY, including the owner name, gets prepended before hashing.
@@ -182,7 +186,7 @@ echo example.com. IN DNSKEY 257 3 225 MIICIj...AAQ== \
 example.com.	3600	IN	DS	7573 225 2 fcb6...c26c
 ```
 
-[TODO: what if a server has different keys depending on crypto algorithm negotiation? probably need some words on that somewhere, perhaps not (only) in this section]
+[TODO: what if a server has different keys depending on crypto algorithm negotiation? probably need some words on that somewhere, perhaps not (only) in this section. Most likely, operators SHOULD not to do that at all - this is a new protocol, servers don't have to deal with Windows XP clients]
 
 # Implementation
 
@@ -195,12 +199,12 @@ This specification defines no changes to query processing in authoritative serve
 
 If DoT-signaling DS records are published for a zone, all name servers for the zone (from both the parent-side and child-side NS RRsets) SHOULD offer DoT service on port 853, and when they do, they SHOULD do so using keys present in the DS RRset.
 However, there are potential cases where this is not possible, like having multiple DNS providers.
-In this case the name servers that do not support DoT SHOULD respond with a RST response on the port tcp/853 to prevent name resolution slow downs.
+In this case the name servers that do not support DoT MUST respond with a RST response or similar on the port tcp/853 to prevent name resolution slowdowns.
 
 ## Validating resolver changes
 
-If a resolver succesfully uses DoT with a nameserver as specified in this document, it MAY assume DoT is always available for that nameserver.
-However, it MAY NOT assume that the connection is properly pinned unless there is a DS record available for the domain it is currently resolving.
+If a resolver succesfully uses DoT with a nameserver as specified in this document for one domain, it MAY assume DoT is always available from that nameserver for questions for another domain.
+However, it MUST NOT assume that the connection is properly pinned for that other domain unless there is a DS record available for that other domain it is currently resolving.
 
 A validating resolver that supports this draft will perform the following actions when a DS record with algorithm TBD is encountered:
 
@@ -282,12 +286,14 @@ The following entries have been added to the registry:
 
 # Acknowledgements
 
-Great input was received from
+The authors would like to thank the following individual for their useful input:
 Job Snijders,
+Maik Zumstrull,
 Petr Spacek,
 Pieter Lexis,
 Ralph Dolmans,
 Remi Gacogne,
+Seth Arnold,
 and Vladimir Cunat.
 
 {backmatter}
