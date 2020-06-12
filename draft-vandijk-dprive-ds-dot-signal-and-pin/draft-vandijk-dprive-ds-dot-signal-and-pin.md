@@ -192,6 +192,7 @@ If a resolver succesfully uses DoT with a nameserver as specified in this docume
 However, it MAY NOT assume that the connection is properly pinned unless there is a DS record available for the domain it is currently resolving.
 
 A validating resolver that supports this draft will perform the following actions when a DS record with algorithm TBD is encountered:
+
 1. Connects to the name server on port 853.
 2. During TLS handshake, the resolver will extract the SubjectPublicKeyInfo from the certificate.
 3. Construct an in-memory DNSKEY record [@RFC4034] section 2 with its fields set as follow:
