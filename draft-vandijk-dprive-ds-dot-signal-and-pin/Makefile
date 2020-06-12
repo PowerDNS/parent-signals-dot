@@ -24,7 +24,7 @@ clean:
 	xml2rfc --html -o $@ $<
 
 %.xml: %.md
-	mmark -2 < $< > $@
+	mmark  < $< > $@
 
 clean:
 	rm -f draft-*.txt draft-*.html draft-*.xml
