@@ -194,17 +194,17 @@ However, it MAY NOT assume that the connection is properly pinned unless there i
 A validating resolver that supports this draft will perform the following actions when a DS record with algorithm TBD is encountered:
 1. Connects to the name server on port 853.
 2. During TLS handshake, the resolver will extract the SubjectPublicKeyInfo from the certificate.
-3. Construct an in-memory DNSKEY record [@RFC4034#section-2] with its fields set as follow:
+3. Construct an in-memory DNSKEY record [@RFC4034] section 2 with its fields set as follow:
   - Flags: 0
   - Protocol: 3
   - Algorithm: TBD
   - Public Key: The wire-format SubjectPublicKeyInfo
 4. Get the list of Digest Type for DS records optained from the parent with algorithm TBD
 5. For each digest type from the list, compute the DS record of the previously computed DNSKEY, its fields are set as follow:
-  - Key Tag: computed from DNS key using [@RFC4034#appendix-B]
+  - Key Tag: computed from DNS key using [@RFC4034] appendix B
   - Algorithm: TBD
   - Digest Type: the current Digest Type we are computing the DS for.
-  - Digest: Following [RFC4034#section-5.1.4], compute the digest of owner name | previously computed DNSKEY's RDATA.
+  - Digest: Following [@RFC4034] section 5.1.4, compute the digest of owner name | previously computed DNSKEY's RDATA.
 6. If any computed DS record matches a DS record in the DS record set we got from the parent, the connection is successfully authenticated.
 
 ## Stub resolver changes
