@@ -32,7 +32,7 @@ cert = x509.load_der_x509_certificate(cs.getpeercert(binary_form=True), default_
 print("### pubkey:\n{}".format(cert.public_key().public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo).decode('ascii')))
 spki=cert.public_key().public_bytes(serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
 print("### spki:\n{}".format(spki))
-tohash = dns.name.from_text(domain).to_wire()+b'\x00\x00'+bytes((3,))+bytes((alg,))+spki
+tohash = dns.name.from_text(domain).to_wire()+b'\x01\x01'+bytes((3,))+bytes((alg,))+spki
 digest = hashlib.sha256(tohash).hexdigest()
 print("### digest for DS:\n{}".format(digest))
 print("### DS:\n{} IN DS x {} 2 {}".format(domain, alg, digest))

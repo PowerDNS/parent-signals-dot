@@ -55,7 +55,7 @@ func main() {
 			}
 			// Assume that the first cert is probably the right one
 			cert := certs[0]
-			rdata := []byte{byte(0), byte(0), byte(3), byte(alg)}
+			rdata := []byte{byte(1), byte(1), byte(3), byte(alg)}
 			rdata = append(rdata, cert.RawSubjectPublicKeyInfo...)
 			hashData := toDnsName(domain)
 			hashData = append(hashData, rdata...)
