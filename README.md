@@ -1,7 +1,7 @@
 # Goal
 
 Figure out a way to signal DoT support (which would then be mandatory to avoid downgrade attacks) for a domain, from the delegation side, like DS records do for DNSSEC.
-Ideally, this would support some kind of pinning
+Ideally, this would support some kind of pinning.
 
 # Previous work
 
