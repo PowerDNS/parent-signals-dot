@@ -200,7 +200,7 @@ A validating resolver that supports this draft will perform the following action
   - Protocol: 3
   - Algorithm: TBD
   - Public Key: The wire-format SubjectPublicKeyInfo
-4. Get the list of Digest Type for DS records optained from the parent with algorithm TBD
+4. Get the list of Digest Type for DS records obtained from the parent with algorithm TBD
 5. For each digest type from the list, compute the DS record of the previously computed DNSKEY, its fields are set as follow:
   - Key Tag: computed from DNS key using [@!RFC4034] appendix B
   - Algorithm: TBD
