@@ -99,8 +99,8 @@ If the DoT connection is unsuccessful or the public key supplied the server does
 A domain MAY have more than one DS record with DNSKEY algorithm TBD.
 A resolver with support for TBD should then try to verify the public key supplied by the authoritative nameserver against every supplied DS record.
 Multiple records can be used to support multiple DS digest types, multiple TLS key algorithms, different keys for each authoritative, and for key rollovers.
-In case of an algorithm rollover the DS record should be added to all served domains before the new key is deployed on the authoritatives.
-To allow for emergency rollovers having a standby DS record for all domains with a private key securely stored offline can be a valid strategy.
+In case of an algorithm or key rollover the new DS record should be added to all served domains before the new key is deployed on the authoritatives.
+To allow for emergency rollovers, having a standby DS record for all domains with a private key securely stored offline can be a valid strategy.
 
 The pseudo DNSKEY record MUST contain Base64 encoded ([@!RFC4648] 4.) DER SubjectPublicKeyInfo as defined in [@!RFC5280] 4.1.2.7.
 Since the cert provided by the TLS server over the wire is already DER encoded this makes for easy validation.
