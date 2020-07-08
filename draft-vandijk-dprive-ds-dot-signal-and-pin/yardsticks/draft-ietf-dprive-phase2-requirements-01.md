@@ -1,0 +1,116 @@
+This document quotes draft-ieft-dprive-phase2-requirements-01 to mark each 'requirement' as satisfied by the draft, unsatisfied by the draft, or commented otherwise. Every 'Yes' should be taken as 'when deployed by the relevant operators', or in other words 'the draft protocol permits it and the operator can choose to deploy'.
+
+> DNS Privacy Requirements for Exchanges between Recursive Resolvers and Authoritative Servers
+>
+>     draft-ietf-dprive-phase2-requirements-01
+> 
+> Abstract
+> 
+>    This document provides requirements for adding confidentiality to DNS
+>    exchanges between recursive resolvers and authoritative servers.
+> 
+> 5.  Requirements
+> 
+>    The requirements of different interested stakeholders are outlined
+>    below.
+> 
+> 5.1.  Mandatory Requirements
+> 
+>    1.   Each implementing party should be able to independently take
+>         incremental steps to meet requirements without the need for
+>         close coordination (e.g. loosely coupled)
+
+Yes.
+
+>    2.   Use a secure transport protocol between a recursive resolver and
+>         authoritative servers
+
+Yes.
+
+>    3.   Use a secure transport protocol between a recursive resolver and
+>         TLD servers
+
+Yes.
+
+>    4.   Use a secure transport protocol between a recursive resolver and
+>         the root servers
+
+Yes, but the quite unique situation of the root servers being operated by 13 parties might prove interesting when counting DS records.
+
+>    5.   The secure transport MUST only be established when referential
+>         integrity can be verified, MUST NOT have circular dependencies,
+>         and MUST be easily analyzed for diagnostic purposes.
+
+Yes, yes, perhaps.
+ 
+>    6.   Use a secure transport protocol or other DNS privacy protections
+>         in a manner that enables operators to perform appropriate
+>         performance and security monitoring, conduct relevant research,
+>         etc.
+
+Yes, maybe, etc.
+
+>    7.   The authoritative domain owner or their administrator MUST have
+>         the option to specify their secure transport preferences (e.g.
+>         what specific protocols are supported).
+
+The draft is limited to DoT.
+We propose that other protocols update this draft by adding additional DNSKEY algorithms (TBD2 etc.).
+TODO: should we have words on future protocols such as DoQ?
+
+>         This SHALL include a
+>         method to publish a list of secure transport protocols (e.g.
+>         DoH, DoT and other future protocols not yet developed).  In
+>         addition this SHALL include whether a secure transport protocol
+>         MUST always be used (non-downgradable) or whether a secure
+>         transport protocol MAY be used on an opportunistic (not strict)
+>         basis.
+
+This draft specifies that the protocol indicated (DoT) is mandatory and no downgrades shall occur.
+
+>    8.   The authoritative domain owner or their administrator MUST have
+>         the option to vary their preferences on an authoritative
+>         nameserver to nameserver basis, due to the fact that
+>         administration of a particular DNS zone may be delegated to
+>         multiple parties (such as several CDNs), each of which may have
+>         different technical capabilities.
+
+This draft specifies that if not all authoritatives for a domain cooperate in DoT with the pinned keys, they must fail swiftly and not cause timeouts.
+
+>    9.   The specification of secure transport preferences MUST be
+>         performed using the DNS and MUST NOT depend on non-DNS
+>         protocols.
+
+Yes.
+
+>    10.  For the secure transport, TLS 1.3 (or later versions) MUST be
+>         supported and downgrades from TLS 1.3 to prior versions MUST not
+>         occur.
+
+TODO: this makes sense to me
+
+> 5.2.  Optional Requirements
+> 
+>    1.  QNAME minimisation SHOULD be implemented in all steps of
+>        recursion
+
+Out of scope.
+
+>    2.  DNSSEC validation SHOULD be performed
+
+Out of scope.
+
+>    3.  If an authoritative domain owner or their administrator indicates
+>        that (1) multiple secure transport protocols are available or
+>        that (2) a secure transport and insecure transport are available,
+>        then per the recommendations in [RFC8305] (aka Happy Eyeballs) a
+>        recursive server SHOULD initiate concurrent connections to
+>        available protocols.  Consistent with Section 2 of [RFC8305] this
+>        would be: (1) Initiation of asynchronous DNS queries to determine
+>        what transport protocols are supported, (2) Sorting of resolved
+>        destination transport protocols, (3) Initiation of asynchronous
+>        connection attempts, and (4) Establishment of one connection,
+>        which cancels all other attempts.
+
+We strongly disagree, with reference to [the bottom end of Duane Wessels' response to phase2-01](https://mailarchive.ietf.org/arch/msg/dns-privacy/eMtjqBBu6m7YhKEHkW5ZKfvZohg/).
+We also believe that when the presence of any secure transport is indicated, no insecure transport should ever be permitted.
