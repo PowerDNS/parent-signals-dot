@@ -96,6 +96,12 @@ If a resolver with support for TBD encounters a DS record with the DNSKEY algori
 It MUST use the hashes attached to the DS records with DNSKEY algorithm type TBD to check whether the public key supplied by the authoritative nameserver is valid.
 If the DoT connection is unsuccessful or the public key supplied the server does not match one of the DS digests, the resolver MUST NOT fall back to unencrypted Do53.
 
+A domain MAY have more than one DS record with DNSKEY algorithm TBD.
+A resolver with support for TBD should then try to verify the public key supplied by the authoritative nameserver against every supplied DS record.
+Multiple records can be used to support multiple DS digest types, multiple TLS key algorithms, different keys for each authoritative, and for key rollovers.
+In case of an algorithm or key rollover the new DS record should be added to all served domains before the new key is deployed on the authoritatives.
+To allow for emergency rollovers, having a standby DS record for all domains with a private key securely stored offline can be a valid strategy.
+
 The pseudo DNSKEY record MUST contain Base64 encoded ([@!RFC4648] 4.) DER SubjectPublicKeyInfo as defined in [@!RFC5280] 4.1.2.7.
 Since the cert provided by the TLS server over the wire is already DER encoded this makes for easy validation.
 The pseudo DNSKEY algorithm type TBD is algorithm agnostic, like the TLSA record, since the DER encoded data already contains information about the used algorithm.
@@ -211,7 +217,8 @@ A validating resolver that supports this draft will perform the following action
   - Algorithm: TBD
   - Digest Type: the current Digest Type we are computing the DS for.
   - Digest: Following [@!RFC4034] section 5.1.4, compute the digest of owner name | previously computed DNSKEY's RDATA.
-6. If any computed DS record matches a DS record in the DS record set we got from the parent, the connection is successfully authenticated.
+6. Test the computed DS record against all the supplied DS records until a match is encountered.
+7. If any computed DS record matches a DS record in the DS record set we got from the parent, the connection is successfully authenticated.
 
 ## Stub resolver changes
 
@@ -284,4 +291,3 @@ Remi Gacogne,
 and Vladimir Cunat.
 
 {backmatter}
-
