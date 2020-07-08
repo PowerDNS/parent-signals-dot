@@ -103,6 +103,9 @@ Algorithm support SHOULD be handled at the TLS handshake level, which means a DN
 The pseudo DNSKEY record MUST NOT be present in the zone.
 The procedure for hashing the pseudo DNSKEY record is the same as for a normal DNSKEY as defined in RFC4034.
 
+As DNSKEY algorithm TBD is not meant to be used for Zone Signing, the existing ZONE and SEP flags do not mean anything.
+This specification statically defines the flags value as 257 for optimal compatibility with existing registry operations.
+
 The pseudo DNSKEY type can be used in CDNSKEY and CDS (as defined in [@!RFC7344]) records. These records MAY be present in the zone.
 
 For those familiar with TLSA ([@RFC6698]), key matching for this protocol is identical to that provided by `TLSA 3 1 0` for (C)DNSKEY.
@@ -115,6 +118,8 @@ This section will take you through the various parts of this specification, by e
 We assume that we are working with a domain `example.com.` with one name server, `ns.example.com.`.
 
 ## Generating and placing the (C)DNSKEY/DS records
+
+[NOTE: this section uses '225' instead of 'TBD' because otherwise the code does not work. We need to fix this before publication.]
 
 We will walk you through the CDNSKEY/DS generation, demonstrating it in terms of basic shell scripting and some common tools.
 
@@ -152,13 +157,13 @@ openssl s_client -connect ns.example.com:853 </dev/null \
 Then we prepend
 
 ```
-example.com. IN CDNSKEY 0 3 225
+example.com. IN CDNSKEY 257 3 225
 ```
 
 so that we end up with
 
 ```
-example.com. IN CDNSKEY 0 3 225 MIICIj...AAQ==
+example.com. IN CDNSKEY 257 3 225 MIICIj...AAQ==
 ```
 
 If your registry accepts CDNSKEY, or DNSKEY via EPP, you are done - you can get your DS placed.
@@ -166,7 +171,7 @@ If your registry accepts CDNSKEY, or DNSKEY via EPP, you are done - you can get 
 To generate the DS, do something like this:
 
 ```
-echo example.com. IN DNSKEY 0 3 225 MIICIj...AAQ== \
+echo example.com. IN DNSKEY 257 3 225 MIICIj...AAQ== \
   | ldns-key2ds -f -n -2 /dev/stdin
 example.com.	3600	IN	DS	7573 225 2 fcb6...c26c
 ```
@@ -196,7 +201,7 @@ A validating resolver that supports this draft will perform the following action
 1. Connects to the name server on port 853.
 2. During TLS handshake, the resolver will extract the SubjectPublicKeyInfo from the certificate.
 3. Construct an in-memory DNSKEY record [@!RFC4034] section 2 with its fields set as follow:
-  - Flags: 0
+  - Flags: 257
   - Protocol: 3
   - Algorithm: TBD
   - Public Key: The wire-format SubjectPublicKeyInfo
