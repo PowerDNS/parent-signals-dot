@@ -212,7 +212,7 @@ A validating resolver that supports this draft will perform the following action
   - Algorithm: TBD
   - Digest Type: the current Digest Type we are computing the DS for.
   - Digest: Following [@!RFC4034] section 5.1.4, compute the digest of owner name | previously computed DNSKEY's RDATA.
-6. Test the computed DS record against all the supplied DS records untill a match is encountered.
+6. Test the computed DS record against all the supplied DS records until a match is encountered.
 7. If any computed DS record matches a DS record in the DS record set we got from the parent, the connection is successfully authenticated.
 
 ## Stub resolver changes
@@ -286,4 +286,3 @@ Remi Gacogne,
 and Vladimir Cunat.
 
 {backmatter}
-
