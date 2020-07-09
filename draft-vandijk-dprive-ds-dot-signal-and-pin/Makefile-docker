@@ -20,4 +20,4 @@ clean:
 	rm -f draft*.txt draft-*.xml draft-*.html
 
 %.txt: %.md
-	docker run --rm --user=$(UID):$(GID) -v $(CWD):/rfc -v $(HOME)/.cache/xml2rfc:/var/cache/xml2rfc rfctools md2rfc $^
+	docker run --rm --user=$(UID):$(GID) -v $(CWD):/rfc -v $(HOME)/.cache/xml2rfc:/var/cache/xml2rfc habbie/rfctools:v3 md2rfc $^
