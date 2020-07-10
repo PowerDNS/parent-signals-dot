@@ -35,7 +35,8 @@ Yes.
 >    4.   Use a secure transport protocol between a recursive resolver and
 >         the root servers
 
-Yes, but the quite unique situation of the root servers being operated by 13 parties might prove interesting when counting DS records.
+There's a trust anchor distribution problem here.
+Robin proposed to special-case the root and have resolvers fetch CDS during root priming.
 
 >    5.   The secure transport MUST only be established when referential
 >         integrity can be verified, MUST NOT have circular dependencies,
