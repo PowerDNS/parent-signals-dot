@@ -87,7 +87,7 @@ Yes.
 >         supported and downgrades from TLS 1.3 to prior versions MUST not
 >         occur.
 
-TODO: this makes sense to me
+Yes, but out of scope for this discovery/pinning draft.
 
 > 5.2.  Optional Requirements
 > 
