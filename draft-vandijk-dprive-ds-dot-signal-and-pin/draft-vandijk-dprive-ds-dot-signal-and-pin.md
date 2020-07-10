@@ -186,8 +186,6 @@ echo example.com. IN DNSKEY 257 3 225 MIICIj...AAQ== \
 example.com.	3600	IN	DS	7573 225 2 fcb6...c26c
 ```
 
-[TODO: what if a server has different keys depending on crypto algorithm negotiation? probably need some words on that somewhere, perhaps not (only) in this section. Most likely, operators SHOULD not to do that at all - this is a new protocol, servers don't have to deal with Windows XP clients]
-
 # Implementation
 
 The subsection titles in this section attempt to follow the terminology from [@RFC8499] in as far as it has suitable terms.
