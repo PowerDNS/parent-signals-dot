@@ -344,3 +344,15 @@ Seth Arnold,
 and Vladimir Cunat.
 
 {backmatter}
+
+# Document history
+
+## Changes between -00 and -01
+
+1. Lots of clarifying text that does not change any semantics, including:
+    * a section on how resolvers would actually use this protocol.
+    * we made it clearer that multiple DS records for a delegation are allowed, and why you would want this.
+1. DNSKEY flags are now set to 257, because it looks like this will make it a lot easier for many registries to accept the records.
+
+We have tried to do a review of this protocol against the requirement of the DPRIVE phase 2 document.
+You can find this review (which might be updated outside of revisions of this draft or the phase 2 draft) [in our GitHub repo](https://github.com/PowerDNS/parent-signals-dot/blob/master/draft-vandijk-dprive-ds-dot-signal-and-pin/yardsticks/draft-ietf-dprive-phase2-requirements-01.md).
