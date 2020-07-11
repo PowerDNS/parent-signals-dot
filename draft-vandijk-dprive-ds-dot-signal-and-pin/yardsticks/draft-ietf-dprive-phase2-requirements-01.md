@@ -99,7 +99,8 @@ Out of scope.
 
 >    2.  DNSSEC validation SHOULD be performed
 
-Out of scope.
+DS records used in validating pins for doing DoT MUST be validated.
+Other than that, resolver DNSSEC behaviour is out of scope for this draft.
 
 >    3.  If an authoritative domain owner or their administrator indicates
 >        that (1) multiple secure transport protocols are available or
