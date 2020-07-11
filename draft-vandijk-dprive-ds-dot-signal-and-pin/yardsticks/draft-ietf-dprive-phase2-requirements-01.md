@@ -116,3 +116,6 @@ Other than that, resolver DNSSEC behaviour is out of scope for this draft.
 
 We strongly disagree, with reference to [the bottom end of Duane Wessels' response to phase2-01](https://mailarchive.ietf.org/arch/msg/dns-privacy/eMtjqBBu6m7YhKEHkW5ZKfvZohg/).
 We also believe that when the presence of any secure transport is indicated, no insecure transport should ever be permitted.
+
+However, it would make sense for a resolver to support this protocol in a 'Permissive' mode that logs failures - just like many operators will go from 'no DNSSEC' to 'check signatures but do not SERVFAIL on Bogus' to, finally, 'full DNSSEC validation'.
+TODO: write a decent paragraph in the document about this, and make it clear that this weakens various MUSTs, and that this is allowed.
