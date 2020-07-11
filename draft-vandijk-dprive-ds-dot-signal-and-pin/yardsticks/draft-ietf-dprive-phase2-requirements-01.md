@@ -22,6 +22,13 @@ This document quotes draft-ieft-dprive-phase2-requirements-01 to mark each 'requ
 
 Yes.
 
+Resolver operators can go from 'not doing DoT' to 'doing DoT probing' (if software supports it, it is not in scope of this draft), to 'support this protocol in a permissive mode to see how well it would work', to 'full deployment without fallback'.
+We also imagine that positive Trust Anchors could be configured for specific domains and name servers, perhaps by mutual agreement, to gain operational experience.
+
+Zone owners are in charge of their DS records, and by extension, in charge of whether this DoT signal-and-pin is applied to their zone at all.
+Thus, name server operators have the power (in coordination with their users, who are zone owners) to incrementally deploy to one zone, then ten zones, and so on.
+When the operator has the ability to update DS records (because the operator is also the registrar, or because CDS/CDNSKEY is supported in a situation), that operator can even do the incremental rollout without talking to their users all the time.
+
 >    2.   Use a secure transport protocol between a recursive resolver and
 >         authoritative servers
 
