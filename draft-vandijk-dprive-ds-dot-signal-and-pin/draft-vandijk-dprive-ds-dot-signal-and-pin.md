@@ -201,7 +201,7 @@ In this case the name servers that do not support DoT MUST respond with a RST re
 
 ## Validating resolver changes
 
-If a resolver succesfully uses DoT with a nameserver as specified in this document for one domain, it MAY assume DoT is always available from that nameserver for questions for another domain.
+If a resolver successfully uses DoT with a nameserver as specified in this document for one domain, it MAY assume DoT is always available from that nameserver for questions for another domain.
 However, it MUST NOT assume that the connection is properly pinned for that other domain unless there is a DS record available for that other domain it is currently resolving.
 
 A validating resolver that supports this draft will perform the following actions when a DS record with algorithm TBD is encountered:
