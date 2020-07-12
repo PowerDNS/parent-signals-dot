@@ -261,6 +261,55 @@ Readers are advised to note that other implementations may exist.
 
 According to RFC 6982, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit".
 
+# Design Considerations
+
+[RFC Editor: please remove this section before publication]
+
+A protocol design is nothing without a clear statement of the constraints it was designed to meet, and perhaps a list of other constraints it meets by accident.
+
+We humbly acknowledge [Petr Spacek's excellent summary of the 'nice properties' this protocol has](https://mailarchive.ietf.org/arch/msg/dns-privacy/_Zf5TGVAcUfPRrQ_7o_NPnmnlZs/) as a source of inspiration for this section.
+
+Manu's DSPKI proposal had the following excellent properties:
+
+* no extra roundtrips (assuming DSPKI came 'for free' with delegations like DS records do today)
+* downgrade resistance
+* simple protocol, no indirections
+
+It also had this one very important undesirable property:
+
+* a new RRtype with 'special' behaviour would be pretty much impossible to deploy
+
+In various private and public discussions, it was quickly realised that fitting this into the actual DS record would solve that problem.
+The first obvious answer to that is 'just assign some numbers and do in DS what DSPKI defined in its own type'.
+Petr Spacek and others pointed out that this would be incompatible with 'DNSKEY-style' registries, i.e. those that demand DNSKEY, not DS, in their communications (those communications being either EPP, some registry-specific protocol, or CDNSKEY).
+In other words, a protocol that would not allow the DS to be hashed 'the usual way' from a DNSKEY would not go far, as many registries are slow to update their software even *just* for a couple of new numbers in an IANA registry.
+
+With that, the puzzle was clear.
+We need some format to signal and pin DoT with a DNSKEY, in such a way that a DS can be hashed from it without software changes in parties such as registries, and such that that DS is enough for a resolver to validate a TLS connection.
+
+Eventually we realised that a resolver could take the TLS SubjectPublicKeyInfo, construct a 'pseudo' DNSKEY from it, and hash that into a DS.
+This resolves the one bad property of DSPKI (deployability without changing every auth, resolver, and registry stack in the world).
+
+The design constraints we felt we must meet with this protocol were:
+
+* deployability without demanding massive software changes or even 'flag days'
+* downgrade resistance
+
+And we feel we have met those.
+The other positive properties of DSPKI (simplicity, no extra roundtrips) have been kept intact more by accident than by strong intention.
+
+We can understand that several people are saying that this is hacky (we do not even disagree), and that TLSA should have been used.
+However, we feel that any TLSA-based protocol we can imagine would be a lot more complex, and therefore prone to breakage which might be hard to debug.
+It would also be very easy to accidentally introduce chicken-and-egg problems with a more indirect approach.
+Note that we are responding to imagined TLSA-based protocols here.
+If a draft appears for a TLSA-based approach to DoT signaling/pinning, we would love to read it.
+Depending on what that draft looks like, it might even make sense to have that protocol *and* the protocol described in this document.
+
+The biggest downside to this DS-based protocol is that a change in TLS keys on an auth may require DS updates for thousands or even hundreds of thousands of domains.
+This issue is partially mitigated by allowing backup keys to be part of those DS sets.
+Furthermore we hope that efforts from Cloudflare and others for shortening the path between auth operator and domain registrar one day work out.
+Those efforts are focused on NSset updates and DS updates for DNSSEC validation, but they would also aid key rollovers for this protocol greatly.
+
 ## PoC
 
 Some Proof of Concept code showing the generation of the (C)DNSKEY, and the subsequent hashing by a client (which should match one of the DS records with algo TBD), in Python and Go, is available at https://github.com/PowerDNS/parent-signals-dot/tree/master/poc
