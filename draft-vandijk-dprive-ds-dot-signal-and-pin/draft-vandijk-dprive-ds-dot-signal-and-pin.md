@@ -284,7 +284,7 @@ The following entries have been added to the registry:
 
 # Acknowledgements
 
-The authors would like to thank the following individual for their useful input:
+The authors would like to thank the following individuals for their useful input:
 Job Snijders,
 Maik Zumstrull,
 Petr Spacek,
