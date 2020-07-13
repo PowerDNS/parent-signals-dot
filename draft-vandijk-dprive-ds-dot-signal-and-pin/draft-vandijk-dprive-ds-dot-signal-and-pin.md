@@ -261,6 +261,10 @@ Readers are advised to note that other implementations may exist.
 
 According to RFC 6982, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit".
 
+## PoC
+
+Some Proof of Concept code showing the generation of the (C)DNSKEY, and the subsequent hashing by a client (which should match one of the DS records with algo TBD), in Python and Go, is available at https://github.com/PowerDNS/parent-signals-dot/tree/master/poc
+
 # Design Considerations
 
 [RFC Editor: please remove this section before publication]
@@ -309,10 +313,6 @@ The biggest downside to this DS-based protocol is that a change in TLS keys on a
 This issue is partially mitigated by allowing backup keys to be part of those DS sets.
 Furthermore we hope that efforts from Cloudflare and others for shortening the path between auth operator and domain registrar one day work out.
 Those efforts are focused on NSset updates and DS updates for DNSSEC validation, but they would also aid key rollovers for this protocol greatly.
-
-## PoC
-
-Some Proof of Concept code showing the generation of the (C)DNSKEY, and the subsequent hashing by a client (which should match one of the DS records with algo TBD), in Python and Go, is available at https://github.com/PowerDNS/parent-signals-dot/tree/master/poc
 
 # IANA Considerations
 
