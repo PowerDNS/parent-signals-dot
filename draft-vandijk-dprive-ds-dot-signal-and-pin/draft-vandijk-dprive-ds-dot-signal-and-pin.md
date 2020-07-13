@@ -355,5 +355,5 @@ and Vladimir Cunat.
 1. DNSKEY flags are now set to 257, because it looks like this will make it a lot easier for many registries to accept the records.
 1. Added a 'Design Considerations' section to give some background to why this protocol is what it is.
 
-We have tried to do a review of this protocol against the requirement of the DPRIVE phase 2 document.
+We have tried to do a review of this protocol against the requirements of the DPRIVE phase 2 document.
 You can find this review (which might be updated outside of revisions of this draft or the phase 2 draft) [in our GitHub repo](https://github.com/PowerDNS/parent-signals-dot/blob/master/draft-vandijk-dprive-ds-dot-signal-and-pin/yardsticks/draft-ietf-dprive-phase2-requirements-01.md).
