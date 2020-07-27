@@ -150,11 +150,11 @@ Step 5: we can start issuing queries, safe in the knowledge that any observer wi
 
 class: middle
 
-# Open topics
+# Open questions
 
 ---
 
-# DNSKEY flags?
+# Q: DNSKEY flags?
 
 * 0 makes semantic sense - these are not ZONE/SEP keys
   * but these are not Zone Signing keys, so those bits mean nothing anyway?
@@ -163,7 +163,7 @@ class: middle
 
 ---
 
-# What do non-DNSSEC DSes even mean?
+# Q: What do non-DNSSEC DSes even mean?
 
 * right now, registries say 'DNSSEC: Yes' when you have any DS
   * because they ignore the Zone Signing column in the IANA Domain Name System Security (DNSSEC) Algorithm Numbers registry
