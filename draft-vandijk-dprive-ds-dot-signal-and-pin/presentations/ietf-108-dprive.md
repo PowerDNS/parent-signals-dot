@@ -161,14 +161,33 @@ class: middle
 * 257 is suspected to make registry deployment easier
   * need more data on this (both current and future!)
 
+~~~ ascii-art
++-----------------------------------+
+| Number | Description              |
+|  7     | ZONE                     |
+|  8     | REVOKE                   |
+| 15     | Secure Entry Point (SEP) |
++-----------------------------------+
+~~~
+
 ---
 
 # Q: What do non-DNSSEC DSes even mean?
 
 * right now, registries say 'DNSSEC: Yes' when you have any DS
-  * because they ignore the Zone Signing column in the IANA Domain Name System Security (DNSSEC) Algorithm Numbers registry
 * CDS/CDNSKEY 'continuity' rules assume your CDS/CDNSKEY are for DNSSEC
-  * because that's how it has always been
+  * current rules in 7344 4.1 also prevent DoT CDS/CDNSKEY for unsigned zones
+
+~~~ ascii-art
++--------------+----------------+
+| Number       | TBD            |
+| Description  | DoT signal+pin |
+| Mnemonic     | DOTPIN         |
+| Zone signing | N              |
+| Trans sec.   | N              |
+| Reference    | RFC TBD2       |
++--------------+----------------+
+~~~
 
 ---
 
