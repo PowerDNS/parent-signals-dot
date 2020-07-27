@@ -144,3 +144,26 @@ Step 5: we can start issuing queries, safe in the knowledge that any observer wi
 
 ---
 
+class: middle
+
+# Open topics
+
+---
+
+# DNSKEY flags?
+
+* 0 makes semantic sense - these are not ZONE/SEP keys
+  * but these are not Zone Signing keys, so those bits mean nothing anyway?
+* 257 is suspected to make registry deployment easier
+  * need more data on this (both current and future!)
+
+--
+
+# What do non-DNSSEC DSes even mean?
+
+* right now, registries say 'DNSSEC: Yes' when you have any DS
+  * because they ignore the Zone Signing column in the IANA Domain Name System Security (DNSSEC) Algorithm Numbers registry
+* CDS/CDNSKEY 'continuity' rules assume your CDS/CDNSKEY are for DNSSEC
+  * because that's how it has always been
+
+
