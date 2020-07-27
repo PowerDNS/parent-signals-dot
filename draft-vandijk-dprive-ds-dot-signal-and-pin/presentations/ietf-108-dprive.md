@@ -53,6 +53,10 @@ It is hacky but has very nice properties which are not explicitly described in t
 -- <cite>several people</cite>
 
 ---
+
+# History
+
+---
 # Resolver protocol
 
 RFC 4034, 2.1. DNSKEY RDATA Wire Format
@@ -157,7 +161,7 @@ class: middle
 * 257 is suspected to make registry deployment easier
   * need more data on this (both current and future!)
 
---
+---
 
 # What do non-DNSSEC DSes even mean?
 
@@ -166,4 +170,7 @@ class: middle
 * CDS/CDNSKEY 'continuity' rules assume your CDS/CDNSKEY are for DNSSEC
   * because that's how it has always been
 
+---
+
+# Why not TLSA
 
