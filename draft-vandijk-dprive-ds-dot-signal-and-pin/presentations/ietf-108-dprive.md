@@ -52,7 +52,7 @@ It is hacky but has very nice properties which are not explicitly described in t
 
 # History
 
-* DSPKI draft from Manu at IETF 103 DPRIVE
+* [DSPKI draft](https://tools.ietf.org/html/draft-bretelle-dprive-dot-for-insecure-delegations) from Manu at IETF 103 DPRIVE
   * no additional roundtrips for a resolver
   * downgrade resistant
   * simple protocol, no indirections
