@@ -60,7 +60,13 @@ It is hacky but has very nice properties which are not explicitly described in t
 * now folded into a DNSKEY/DS deployable form
 
 ---
+
+class: middle
+
 # Resolver protocol
+
+---
+# Resolver protocol, step 1
 
 RFC 4034, 2.1. DNSKEY RDATA Wire Format
 
@@ -80,7 +86,7 @@ example.com. DS 7573 TBD 2 fcb6...c26c
 ```
 
 ---
-# Resolver protocol
+# Resolver protocol, step 2
 
 RFC 4034, 2.1. DNSKEY RDATA Wire Format
 
@@ -98,7 +104,7 @@ example.com. NS ns1.example.com.
 Step 2: resolver connects to `ns1.example.com.:853`, negotiates TLS without any key/certificate checking. Resolver receives the auth's pubkey and puts it in the pseudo DNSKEY record. The other 3 DNSKEY fields are filled with constants.
 
 ---
-# Resolver protocol
+# Resolver protocol, step 3
 
 RFC 4034, 2.1. DNSKEY RDATA Wire Format
 
@@ -116,7 +122,7 @@ example.com. DS 7573 TBD 2 fcb6...c26c
 Step 3: for each DS record in the delegation, the pseudo DNSKEY is hashed with the digest type given by that DS (in this case, with digest 2, SHA256). If we're lucky, that yields a DS we've seen.
 
 ---
-# Resolver protocol
+# Resolver protocol, step 4
 
 RFC 4034, 2.1. DNSKEY RDATA Wire Format
 
@@ -135,7 +141,7 @@ Step 4: if we match a DS in step 3, we are done! We are now securely connected t
 
 
 ---
-# Resolver protocol
+# Resolver protocol, step 5
 
 RFC 4034, 2.1. DNSKEY RDATA Wire Format
 
