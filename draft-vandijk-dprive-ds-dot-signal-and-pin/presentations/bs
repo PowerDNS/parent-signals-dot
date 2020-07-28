@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ $1 = 'serve' ]
+then
+  docker run --user $(id -u) --rm --init -p 4100:4100 -v $(pwd):/src taobeier/backslide "$@"
+else
+  docker run --user $(id -u) --rm --init -v $(pwd):/src taobeier/backslide "$@"
+fi
