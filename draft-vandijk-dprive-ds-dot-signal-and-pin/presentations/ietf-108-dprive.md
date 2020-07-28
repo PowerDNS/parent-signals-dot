@@ -78,7 +78,7 @@ RFC 4034, 2.1. DNSKEY RDATA Wire Format
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-Step 1: resolver receives delegation for `example.com.` from `com.`:
+Resolver receives delegation for `example.com.` from `com.`:
 ```
 example.com. NS ns1.example.com.
 example.com. NS ns2.example.com.
@@ -101,7 +101,7 @@ RFC 4034, 2.1. DNSKEY RDATA Wire Format
 ```
 example.com. NS ns1.example.com.
 ```
-Step 2: resolver connects to `ns1.example.com.:853`, negotiates TLS without any key/certificate checking. Resolver receives the auth's pubkey (DER SPKI) and puts it in an in-memory pseudo DNSKEY record. The other 3 DNSKEY fields are filled with constants.
+Resolver connects to `ns1.example.com.:853`, negotiates TLS without any key/certificate checking. Resolver receives the auth's pubkey (DER SPKI) and puts it in an in-memory pseudo DNSKEY record. The other 3 DNSKEY fields are filled with constants.
 
 ---
 # Resolver protocol, step 3
@@ -119,7 +119,7 @@ RFC 4034, 2.1. DNSKEY RDATA Wire Format
 ```
 example.com. DS 7573 TBD 2 fcb6...c26c
 ```
-Step 3: for each DS record in the delegation, the pseudo DNSKEY is hashed with the digest type given by that DS (in this case, with digest 2, SHA256). If we're lucky, that yields a DS we've seen.
+For each DS record in the delegation, the pseudo DNSKEY is hashed with the digest type given by that DS (in this case, with digest 2, SHA256). If we're lucky, that yields a DS we've seen.
 
 ---
 # Resolver protocol, step 4
@@ -137,7 +137,7 @@ RFC 4034, 2.1. DNSKEY RDATA Wire Format
 ```
 example.com. DS 7573 TBD 2 fcb6...c26c
 ```
-Step 4: if we match a DS in step 3, we are done! We are now securely connected to an authoritative server for `example.com`, with no risk of downgrade. If no DS was matched, we can try another server. If we run out of servers, we are under attack (or misconfiguration) and end up unable to resolve anything inside `example.com.`
+If we match a DS in step 3, we are done! We are now securely connected to an authoritative server for `example.com`, with no risk of downgrade. If no DS was matched, we can try another server. If we run out of servers, we are under attack (or misconfiguration) and end up unable to resolve anything inside `example.com.`
 
 
 ---
@@ -153,7 +153,7 @@ RFC 4034, 2.1. DNSKEY RDATA Wire Format
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-Step 5: we can start issuing queries, safe in the knowledge that any observer will only know the name (and IP) of the name server we connected to (at least until Encrypted SNI becomes a thing).
+We can start issuing queries, safe in the knowledge that any observer will only know the name (and IP) of the name server we connected to (at least until Encrypted SNI becomes a thing).
 
 ---
 
