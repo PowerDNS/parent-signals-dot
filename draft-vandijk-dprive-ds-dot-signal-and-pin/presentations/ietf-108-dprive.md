@@ -202,9 +202,9 @@ class: middle
 
 Text from draft:
 
-> Some Proof of Concept code showing the generation of the (C)DNSKEY, and the subsequent hashing by a client (which should match one of the DS records with algo TBD), in Python and Go, is available at https://github.com/PowerDNS/parent-signals-dot/tree/master/poc
+* Some Proof of Concept code showing the generation of the (C)DNSKEY, and the subsequent hashing by a client (which should match one of the DS records with algo TBD), in Python and Go, is available at https://github.com/PowerDNS/parent-signals-dot/tree/master/poc
 
-Also, C++ (using OpenSSL's C interface) example code at https://github.com/PowerDNS/pdns/compare/master...Habbie:sdig-dot-pin#diff-3efa4bf6e7ea5df432dbc64ed49b7f57R231
+Also, C++ (using OpenSSL's C interface and existing PowerDNS code infrastructure) example code at https://github.com/PowerDNS/pdns/compare/master...Habbie:sdig-dot-pin
 
 ---
 
