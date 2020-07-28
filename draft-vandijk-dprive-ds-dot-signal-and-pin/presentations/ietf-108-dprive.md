@@ -39,13 +39,9 @@ It is hacky but has very nice properties which are not explicitly described in t
 
 -- <cite>twitter.com/andrewtj</cite>
 
---
-
 "this signalling and verification scheme sounds clever and neat."
 
 -- <cite>Tony Finch</cite>
-
---
 
 * "This is protocol abuse"
 * "You should be using TLSA"
