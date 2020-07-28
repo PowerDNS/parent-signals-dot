@@ -101,7 +101,7 @@ RFC 4034, 2.1. DNSKEY RDATA Wire Format
 ```
 example.com. NS ns1.example.com.
 ```
-Step 2: resolver connects to `ns1.example.com.:853`, negotiates TLS without any key/certificate checking. Resolver receives the auth's pubkey and puts it in the pseudo DNSKEY record. The other 3 DNSKEY fields are filled with constants.
+Step 2: resolver connects to `ns1.example.com.:853`, negotiates TLS without any key/certificate checking. Resolver receives the auth's pubkey (DER SPKI) and puts it in an in-memory pseudo DNSKEY record. The other 3 DNSKEY fields are filled with constants.
 
 ---
 # Resolver protocol, step 3
