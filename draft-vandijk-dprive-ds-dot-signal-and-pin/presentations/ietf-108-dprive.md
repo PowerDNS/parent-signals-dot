@@ -85,6 +85,8 @@ example.com. NS ns2.example.com.
 example.com. DS 7573 TBD 2 fcb6...c26c
 ```
 
+(TBD: To Be Decided pending IANA assignment)
+
 ---
 # Resolver protocol, step 2
 
