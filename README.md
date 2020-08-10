@@ -58,3 +58,18 @@ The DS NULL digest type will be a pain to get deployed.
 ## TLS chain
 
 [draft-dukhovni-tls-dnssec-chain](https://datatracker.ietf.org/doc/draft-dukhovni-tls-dnssec-chain/), [server implementation 1](https://github.com/andreasschulze/openssl-demo-server), [server implementation 2](https://github.com/shuque/chainserver)
+
+# Unfinished thoughts on authenticating NS names
+
+Wherever this proposes a new parent-side authoritative record type, you can also imagine some DS/DNSKEY hackery.
+These thoughts are expected to enable `TLSA`-based proposals by given the resolver proven NS names.
+Instead of `TLSA`-related proposals, these ideas would also enable the usual CA checking that browsers do.
+
+## DNS
+
+The `DNS` (delegated NS) type provides an authenticated child name server by name (or by hash, to match against the NSset)
+
+## DSNSSET
+
+The `DSNSSET` (delegation signed NS set) type provides a hash/signature over the whole NSSet.
+When changing the NSset, add the new `DSNSSET` first, wait for TTL to expire, then change the NSSet.
