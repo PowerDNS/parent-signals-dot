@@ -73,3 +73,8 @@ The `DNS` (delegated NS) type provides an authenticated child name server by nam
 
 The `DSNSSET` (delegation signed NS set) type provides a hash/signature over the whole NSSet.
 When changing the NSset, add the new `DSNSSET` first, wait for TTL to expire, then change the NSSet.
+
+# Unfinished thoughts
+
+Idea from Petr Spacek: reserve a RRtype numeric range for types that are treated like DS, i.e.: authoritative in the parent; signed by the parent; provided with delegations by the parent.
+We should write a short draft on this (doesn't have to be perfect or accurate) to take to DNSOP to check for appetite.
